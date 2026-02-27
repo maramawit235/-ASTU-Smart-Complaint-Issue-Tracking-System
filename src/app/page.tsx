@@ -43,16 +43,20 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-1 items-center justify-center p-4 md:p-8 bg-muted/40">
-      <Card className="w-full max-w-md shadow-lg border-t-4 border-t-primary">
+    <div className="flex flex-1 items-center justify-center p-4 md:p-8 bg-gray-50 relative overflow-hidden min-h-screen">
+      {/* Soft Background Gradients */}
+      <div className="absolute inset-0 z-0 pointer-events-none bg-glow-tr opacity-50"></div>
+      <div className="absolute inset-0 z-0 pointer-events-none bg-glow-bl opacity-50"></div>
+
+      <Card className="w-full max-w-md shadow-sm border border-gray-100 bg-white relative z-10">
         <CardHeader className="space-y-1 text-center">
           <div className="flex justify-center mb-4">
-            <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
+            <div className="h-16 w-16 rounded-full bg-blue-50 flex items-center justify-center">
               <GraduationCap className="h-10 w-10 text-primary" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold tracking-tight">ASTU Issue Tracker</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-2xl font-bold tracking-tight text-slate-900">ASTU Issue Tracker</CardTitle>
+          <CardDescription className="text-slate-500">
             Sign in to your account
           </CardDescription>
         </CardHeader>
@@ -106,8 +110,8 @@ export default function LoginPage() {
               <Input id="password" type="password" placeholder="••••••••" required />
             </div>
 
-            <Button type="submit" className="w-full mt-6" disabled={!role || isLoading}>
-              {isLoading ? "Signing in..." : "Sign In"}
+            <Button type="submit" className="w-full mt-6 bg-primary hover:bg-primary/90 shadow-sm text-white font-medium" disabled={!role || isLoading}>
+              {isLoading ? "Signing in..." : "Login"}
             </Button>
           </form>
         </CardContent>
