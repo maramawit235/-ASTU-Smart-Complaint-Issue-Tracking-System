@@ -43,12 +43,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-1 items-center justify-center p-4 md:p-8 bg-gray-50 relative overflow-hidden min-h-screen">
+    <div className="flex flex-1 items-center justify-center p-4 md:p-8 bg-slate-50 relative overflow-hidden min-h-[calc(100vh-4rem)]">
       {/* Soft Background Gradients */}
-      <div className="absolute inset-0 z-0 pointer-events-none bg-glow-tr opacity-50"></div>
-      <div className="absolute inset-0 z-0 pointer-events-none bg-glow-bl opacity-50"></div>
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-400/20 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-400/20 blur-[120px] pointer-events-none" />
 
-      <Card className="w-full max-w-md shadow-sm border border-gray-100 bg-white relative z-10">
+      <Card className="w-full max-w-md shadow-2xl border-slate-200/60 bg-white/95 backdrop-blur-md relative z-10 animate-in fade-in zoom-in-95 duration-700">
         <CardHeader className="space-y-1 text-center">
           <div className="flex justify-center mb-4">
             <div className="h-16 w-16 rounded-full bg-blue-50 flex items-center justify-center">
@@ -64,33 +64,33 @@ export default function LoginPage() {
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
               <Label>Select Role</Label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-3">
                 <Button
                   type="button"
                   variant={role === "student" ? "default" : "outline"}
-                  className="w-full flex-col h-auto py-3 gap-2"
+                  className={`w-full flex-col h-auto py-4 gap-2 transition-all duration-300 ${role === "student" ? "shadow-md scale-[1.02] ring-2 ring-primary/20" : "hover:-translate-y-1 hover:shadow-sm"}`}
                   onClick={() => setRole("student")}
                 >
-                  <UserCircle className="h-5 w-5" />
-                  <span className="text-xs">Student</span>
+                  <UserCircle className="h-6 w-6" />
+                  <span className="text-xs font-medium">Student</span>
                 </Button>
                 <Button
                   type="button"
                   variant={role === "department" ? "default" : "outline"}
-                  className="w-full flex-col h-auto py-3 gap-2"
+                  className={`w-full flex-col h-auto py-4 gap-2 transition-all duration-300 ${role === "department" ? "shadow-md scale-[1.02] ring-2 ring-primary/20" : "hover:-translate-y-1 hover:shadow-sm"}`}
                   onClick={() => setRole("department")}
                 >
-                  <Building2 className="h-5 w-5" />
-                  <span className="text-xs">Department</span>
+                  <Building2 className="h-6 w-6" />
+                  <span className="text-xs font-medium">Department</span>
                 </Button>
                 <Button
                   type="button"
                   variant={role === "admin" ? "default" : "outline"}
-                  className="w-full flex-col h-auto py-3 gap-2"
+                  className={`w-full flex-col h-auto py-4 gap-2 transition-all duration-300 ${role === "admin" ? "shadow-md scale-[1.02] ring-2 ring-primary/20" : "hover:-translate-y-1 hover:shadow-sm"}`}
                   onClick={() => setRole("admin")}
                 >
-                  <ShieldCheck className="h-5 w-5" />
-                  <span className="text-xs">Admin</span>
+                  <ShieldCheck className="h-6 w-6" />
+                  <span className="text-xs font-medium">Admin</span>
                 </Button>
               </div>
             </div>
@@ -110,8 +110,8 @@ export default function LoginPage() {
               <Input id="password" type="password" placeholder="••••••••" required />
             </div>
 
-            <Button type="submit" className="w-full mt-6 bg-primary hover:bg-primary/90 shadow-sm text-white font-medium" disabled={!role || isLoading}>
-              {isLoading ? "Signing in..." : "Login"}
+            <Button type="submit" className="w-full mt-6 bg-primary hover:bg-primary/90 shadow-md hover:shadow-lg transition-all duration-200 text-white font-semibold py-5" disabled={!role || isLoading}>
+              {isLoading ? "Signing in..." : "Login to Workspace"}
             </Button>
           </form>
         </CardContent>

@@ -71,36 +71,39 @@ export default function StudentDashboard() {
                 </div>
             </div>
 
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-                <TabsList>
-                    <TabsTrigger value="overview">Overview</TabsTrigger>
-                    <TabsTrigger value="my-tickets">My Complaints</TabsTrigger>
-                    <TabsTrigger value="new">New Complaint</TabsTrigger>
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+                <TabsList className="bg-slate-100/80 p-1">
+                    <TabsTrigger value="overview" className="rounded-md data-[state=active]:shadow-sm">Overview</TabsTrigger>
+                    <TabsTrigger value="my-tickets" className="rounded-md data-[state=active]:shadow-sm">My Complaints</TabsTrigger>
+                    <TabsTrigger value="new" className="rounded-md data-[state=active]:shadow-sm">New Complaint</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="overview" className="space-y-4">
-                    <div className="grid gap-4 md:grid-cols-3">
-                        <Card>
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium">Open Tickets</CardTitle>
-                                <FileText className="h-4 w-4 text-blue-500" />
+                    <div className="grid gap-4 md:grid-cols-3 mb-2">
+                        <Card className="hover:shadow-md transition-all duration-200 border-slate-200/60 hover:-translate-y-0.5 relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
+                                <CardTitle className="text-sm font-medium text-slate-600">Open Tickets</CardTitle>
+                                <FileText className="h-4 w-4 text-primary" />
                             </CardHeader>
-                            <CardContent>
-                                <div className="text-2xl font-bold">{openTickets}</div>
+                            <CardContent className="relative z-10">
+                                <div className="text-3xl font-bold text-slate-800">{openTickets}</div>
                             </CardContent>
                         </Card>
-                        <Card>
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium">In Progress</CardTitle>
+                        <Card className="hover:shadow-md transition-all duration-200 border-slate-200/60 hover:-translate-y-0.5 relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
+                                <CardTitle className="text-sm font-medium text-slate-600">In Progress</CardTitle>
                                 <Clock className="h-4 w-4 text-amber-500" />
                             </CardHeader>
-                            <CardContent>
-                                <div className="text-2xl font-bold">{inProgressTickets}</div>
+                            <CardContent className="relative z-10">
+                                <div className="text-3xl font-bold text-slate-800">{inProgressTickets}</div>
                             </CardContent>
                         </Card>
-                        <Card>
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium">Resolved</CardTitle>
+                        <Card className="hover:shadow-md transition-all duration-200 border-slate-200/60 hover:-translate-y-0.5 relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
+                                <CardTitle className="text-sm font-medium text-slate-600">Resolved</CardTitle>
                                 <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                             </CardHeader>
                             <CardContent>
@@ -109,9 +112,9 @@ export default function StudentDashboard() {
                         </Card>
                     </div>
 
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Recent Activity</CardTitle>
+                    <Card className="border-slate-200/60 shadow-sm">
+                        <CardHeader className="pb-3 border-b border-slate-100 bg-slate-50/50">
+                            <CardTitle className="text-lg">Recent Activity</CardTitle>
                             <CardDescription>Latest updates on your submitted issues.</CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -139,8 +142,8 @@ export default function StudentDashboard() {
                 </TabsContent>
 
                 <TabsContent value="my-tickets">
-                    <Card>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+                    <Card className="border-slate-200/60 shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-300">
+                        <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0 pb-4 bg-slate-50/50 border-b border-slate-100">
                             <div className="space-y-1">
                                 <CardTitle>My Complaints</CardTitle>
                                 <CardDescription>Track the status of your submitted issues here.</CardDescription>
@@ -161,48 +164,50 @@ export default function StudentDashboard() {
                             </div>
                         </CardHeader>
                         <CardContent>
-                            <div className="rounded-md border">
-                                <Table>
-                                    <TableHeader>
-                                        <TableRow className="bg-muted/50">
-                                            <TableHead className="w-[100px]">ID</TableHead>
-                                            <TableHead>Title</TableHead>
-                                            <TableHead>Category</TableHead>
-                                            <TableHead>Status</TableHead>
-                                            <TableHead className="text-right">Date</TableHead>
-                                        </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                        {filteredTickets.map((ticket) => (
-                                            <TableRow key={ticket.id}>
-                                                <TableCell className="font-medium">{ticket.id}</TableCell>
-                                                <TableCell>{ticket.title}</TableCell>
-                                                <TableCell>{ticket.category}</TableCell>
-                                                <TableCell>{getStatusBadge(ticket.status)}</TableCell>
-                                                <TableCell className="text-right text-muted-foreground">
-                                                    {format(new Date(ticket.createdAt), "MMM d, yyyy")}
-                                                </TableCell>
+                            <div className="rounded-md border overflow-x-auto">
+                                <div className="min-w-[600px]">
+                                    <Table>
+                                        <TableHeader>
+                                            <TableRow className="bg-muted/50">
+                                                <TableHead className="w-[100px]">ID</TableHead>
+                                                <TableHead>Title</TableHead>
+                                                <TableHead>Category</TableHead>
+                                                <TableHead>Status</TableHead>
+                                                <TableHead className="text-right">Date</TableHead>
                                             </TableRow>
-                                        ))}
-                                        {filteredTickets.length === 0 && (
-                                            <TableRow>
-                                                <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
-                                                    No tickets found.
-                                                </TableCell>
-                                            </TableRow>
-                                        )}
-                                    </TableBody>
-                                </Table>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {filteredTickets.map((ticket) => (
+                                                <TableRow key={ticket.id}>
+                                                    <TableCell className="font-medium">{ticket.id}</TableCell>
+                                                    <TableCell>{ticket.title}</TableCell>
+                                                    <TableCell>{ticket.category}</TableCell>
+                                                    <TableCell>{getStatusBadge(ticket.status)}</TableCell>
+                                                    <TableCell className="text-right text-muted-foreground">
+                                                        {format(new Date(ticket.createdAt), "MMM d, yyyy")}
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                            {filteredTickets.length === 0 && (
+                                                <TableRow>
+                                                    <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
+                                                        No tickets found.
+                                                    </TableCell>
+                                                </TableRow>
+                                            )}
+                                        </TableBody>
+                                    </Table>
+                                </div>
                             </div>
                         </CardContent>
                     </Card>
                 </TabsContent>
 
                 <TabsContent value="new">
-                    <Card className="max-w-2xl mx-auto border-t-4 border-t-primary">
-                        <CardHeader>
-                            <CardTitle>Submit New Complaint</CardTitle>
-                            <CardDescription>
+                    <Card className="max-w-2xl mx-auto border-t-4 border-t-primary shadow-lg animate-in fade-in scale-95 duration-300">
+                        <CardHeader className="bg-slate-50/50 border-b border-slate-100 pb-5">
+                            <CardTitle className="text-xl">Submit New Complaint</CardTitle>
+                            <CardDescription className="text-sm mt-1">
                                 Fill out the form below to report an issue or complaint to the respective department.
                             </CardDescription>
                         </CardHeader>

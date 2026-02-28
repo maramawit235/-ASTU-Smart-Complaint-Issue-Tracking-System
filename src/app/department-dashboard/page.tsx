@@ -118,48 +118,51 @@ export default function DepartmentDashboard() {
                 <p className="text-muted-foreground">Manage and track issues assigned to your team.</p>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-3">
-                <Card className="border-l-4 border-l-primary shadow-sm hover:shadow-md transition-shadow">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Active Tickets</CardTitle>
+            <div className="grid gap-4 md:grid-cols-3 mb-4">
+                <Card className="border-l-4 border-l-primary shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 relative overflow-hidden group bg-white/50 backdrop-blur-sm">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
+                        <CardTitle className="text-sm font-medium text-slate-600">Active Tickets</CardTitle>
                         <Users className="h-4 w-4 text-primary" />
                     </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{assignedCount}</div>
+                    <CardContent className="relative z-10">
+                        <div className="text-3xl font-bold text-slate-800">{assignedCount}</div>
                     </CardContent>
                 </Card>
-                <Card className="border-l-4 border-l-destructive shadow-sm hover:shadow-md transition-shadow">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">High Priority</CardTitle>
+                <Card className="border-l-4 border-l-destructive shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 relative overflow-hidden group bg-white/50 backdrop-blur-sm">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-destructive/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
+                        <CardTitle className="text-sm font-medium text-slate-600">High Priority</CardTitle>
                         <AlertTriangle className="h-4 w-4 text-destructive" />
                     </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{highPriorityCount}</div>
+                    <CardContent className="relative z-10">
+                        <div className="text-3xl font-bold text-slate-800">{highPriorityCount}</div>
                     </CardContent>
                 </Card>
-                <Card className="border-l-4 border-l-emerald-500 shadow-sm hover:shadow-md transition-shadow">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Resolved</CardTitle>
+                <Card className="border-l-4 border-l-emerald-500 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 relative overflow-hidden group bg-white/50 backdrop-blur-sm">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
+                        <CardTitle className="text-sm font-medium text-slate-600">Resolved</CardTitle>
                         <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                     </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{resolvedCount}</div>
+                    <CardContent className="relative z-10">
+                        <div className="text-3xl font-bold text-slate-800">{resolvedCount}</div>
                     </CardContent>
                 </Card>
             </div>
 
-            <Card className="shadow-sm">
-                <CardHeader>
-                    <CardTitle>Recent Activity</CardTitle>
+            <Card className="shadow-sm border-slate-200/60 mt-6">
+                <CardHeader className="bg-slate-50/50 border-b border-slate-100 pb-4">
+                    <CardTitle className="text-lg">Recent Activity</CardTitle>
                     <CardDescription>Latest complaints routed to your department</CardDescription>
                 </CardHeader>
-                <CardContent>
-                    <div className="space-y-4">
+                <CardContent className="pt-4">
+                    <div className="space-y-3">
                         {tickets.slice(0, 3).map(ticket => (
-                            <div key={ticket.id} className="flex items-center justify-between p-4 border rounded-lg bg-card text-card-foreground">
+                            <div key={ticket.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border border-slate-100 rounded-lg bg-white hover:bg-slate-50 transition-colors shadow-sm gap-4 sm:gap-0">
                                 <div className="space-y-1">
-                                    <p className="font-medium leading-none">{ticket.title}</p>
-                                    <p className="text-sm text-muted-foreground">{ticket.id} • {new Date(ticket.createdAt).toLocaleDateString()}</p>
+                                    <p className="font-semibold text-slate-800 leading-none">{ticket.title}</p>
+                                    <p className="text-xs text-slate-500">{ticket.id} • {new Date(ticket.createdAt).toLocaleDateString()}</p>
                                 </div>
                                 <Badge className={getStatusColor(ticket.status)} variant="outline">
                                     {ticket.status}
@@ -212,49 +215,53 @@ export default function DepartmentDashboard() {
                 </div>
             </div>
 
-            <Card className="shadow-sm border-muted">
-                <Table>
-                    <TableHeader>
-                        <TableRow className="bg-muted/50">
-                            <TableHead className="w-[100px]">ID</TableHead>
-                            <TableHead>Title</TableHead>
-                            <TableHead>Category</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead className="text-right">Date</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {filteredTickets.length > 0 ? (
-                            filteredTickets.map((ticket) => (
-                                <TableRow
-                                    key={ticket.id}
-                                    className="cursor-pointer hover:bg-muted/50 transition-colors"
-                                    onClick={() => setSelectedTicket(ticket)}
-                                >
-                                    <TableCell className="font-medium">{ticket.id}</TableCell>
-                                    <TableCell>{ticket.title}</TableCell>
-                                    <TableCell>
-                                        <Badge variant="secondary" className="font-normal">{ticket.category}</Badge>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Badge variant="outline" className={getStatusColor(ticket.status)}>
-                                            {ticket.status}
-                                        </Badge>
-                                    </TableCell>
-                                    <TableCell className="text-right text-muted-foreground">
-                                        {new Date(ticket.createdAt).toLocaleDateString()}
-                                    </TableCell>
+            <Card className="shadow-sm border-muted overflow-hidden">
+                <div className="overflow-x-auto">
+                    <div className="min-w-[700px]">
+                        <Table>
+                            <TableHeader>
+                                <TableRow className="bg-muted/50">
+                                    <TableHead className="w-[100px]">ID</TableHead>
+                                    <TableHead>Title</TableHead>
+                                    <TableHead>Category</TableHead>
+                                    <TableHead>Status</TableHead>
+                                    <TableHead className="text-right">Date</TableHead>
                                 </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
-                                    No tickets found matching the criteria.
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
+                            </TableHeader>
+                            <TableBody>
+                                {filteredTickets.length > 0 ? (
+                                    filteredTickets.map((ticket) => (
+                                        <TableRow
+                                            key={ticket.id}
+                                            className="cursor-pointer hover:bg-muted/50 transition-colors"
+                                            onClick={() => setSelectedTicket(ticket)}
+                                        >
+                                            <TableCell className="font-medium">{ticket.id}</TableCell>
+                                            <TableCell>{ticket.title}</TableCell>
+                                            <TableCell>
+                                                <Badge variant="secondary" className="font-normal">{ticket.category}</Badge>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Badge variant="outline" className={getStatusColor(ticket.status)}>
+                                                    {ticket.status}
+                                                </Badge>
+                                            </TableCell>
+                                            <TableCell className="text-right text-muted-foreground">
+                                                {new Date(ticket.createdAt).toLocaleDateString()}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                ) : (
+                                    <TableRow>
+                                        <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
+                                            No tickets found matching the criteria.
+                                        </TableCell>
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </div>
+                </div>
             </Card>
         </div>
     );

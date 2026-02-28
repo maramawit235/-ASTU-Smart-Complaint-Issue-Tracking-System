@@ -55,13 +55,14 @@ export default function AdminDashboard() {
             </div>
 
             {/* Top Summary Cards */}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <Card className="shadow-sm border-l-4 border-l-primary/60 hover:shadow-md transition-shadow">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
+                <Card className="shadow-sm border-l-4 border-l-primary/60 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
                         <CardTitle className="text-sm font-medium">Total Complaints</CardTitle>
                         <FileText className="h-4 w-4 text-primary/60" />
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="relative z-10">
                         <div className="text-2xl font-bold">1,248</div>
                         <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
                             <TrendingUp className="h-3 w-3 text-emerald-500" />
@@ -69,32 +70,35 @@ export default function AdminDashboard() {
                         </p>
                     </CardContent>
                 </Card>
-                <Card className="shadow-sm border-l-4 border-l-destructive hover:shadow-md transition-shadow">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <Card className="shadow-sm border-l-4 border-l-destructive hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-destructive/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
                         <CardTitle className="text-sm font-medium">Open Tickets</CardTitle>
                         <AlertTriangle className="h-4 w-4 text-destructive" />
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="relative z-10">
                         <div className="text-2xl font-bold">75</div>
                         <p className="text-xs text-muted-foreground mt-1">Requiring immediate attention</p>
                     </CardContent>
                 </Card>
-                <Card className="shadow-sm border-l-4 border-l-emerald-500 hover:shadow-md transition-shadow">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <Card className="shadow-sm border-l-4 border-l-emerald-500 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
                         <CardTitle className="text-sm font-medium">Resolved Tickets</CardTitle>
                         <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="relative z-10">
                         <div className="text-2xl font-bold">185</div>
                         <p className="text-xs text-muted-foreground mt-1">Closed in the last 30 days</p>
                     </CardContent>
                 </Card>
-                <Card className="shadow-sm border-l-4 border-l-blue-500 hover:shadow-md transition-shadow">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <Card className="shadow-sm border-l-4 border-l-blue-500 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
                         <CardTitle className="text-sm font-medium">Resolution Rate</CardTitle>
                         <Activity className="h-4 w-4 text-blue-500" />
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="relative z-10">
                         <div className="text-2xl font-bold">82.5%</div>
                         <p className="text-xs text-muted-foreground mt-1">Average time: 4.2 hours</p>
                     </CardContent>
@@ -238,49 +242,51 @@ export default function AdminDashboard() {
                             View All Directory
                         </Button>
                     </CardHeader>
-                    <CardContent className="flex-1 p-0">
-                        <Table>
-                            <TableHeader>
-                                <TableRow className="bg-muted/30">
-                                    <TableHead className="w-[200px]">User</TableHead>
-                                    <TableHead>Role</TableHead>
-                                    <TableHead>Dept / Grade</TableHead>
-                                    <TableHead>Status</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {mockUsers.map((user) => (
-                                    <TableRow key={user.id} className="hover:bg-muted/50">
-                                        <TableCell>
-                                            <div className="flex flex-col">
-                                                <span className="font-medium text-sm">{user.name}</span>
-                                                <span className="text-xs text-muted-foreground">{user.email}</span>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Badge variant="outline" className={
-                                                user.role === "Admin" ? "bg-purple-100 text-purple-800 border-purple-200" :
-                                                    user.role === "Department Staff" ? "bg-blue-100 text-blue-800 border-blue-200" :
-                                                        "bg-gray-100 text-gray-800 border-gray-200"
-                                            }>
-                                                {user.role}
-                                            </Badge>
-                                        </TableCell>
-                                        <TableCell className="text-sm text-muted-foreground">
-                                            {user.departmentOrGrade}
-                                        </TableCell>
-                                        <TableCell>
-                                            <Badge variant="secondary" className={
-                                                user.status === "Active" ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-100 border-emerald-200" :
-                                                    "bg-red-100 text-red-800 hover:bg-red-100 border-red-200"
-                                            }>
-                                                {user.status}
-                                            </Badge>
-                                        </TableCell>
+                    <CardContent className="flex-1 p-0 overflow-x-auto">
+                        <div className="min-w-[600px]">
+                            <Table>
+                                <TableHeader>
+                                    <TableRow className="bg-muted/30">
+                                        <TableHead className="w-[200px]">User</TableHead>
+                                        <TableHead>Role</TableHead>
+                                        <TableHead>Dept / Grade</TableHead>
+                                        <TableHead>Status</TableHead>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
+                                </TableHeader>
+                                <TableBody>
+                                    {mockUsers.map((user) => (
+                                        <TableRow key={user.id} className="hover:bg-muted/50">
+                                            <TableCell>
+                                                <div className="flex flex-col">
+                                                    <span className="font-medium text-sm">{user.name}</span>
+                                                    <span className="text-xs text-muted-foreground">{user.email}</span>
+                                                </div>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Badge variant="outline" className={
+                                                    user.role === "Admin" ? "bg-purple-100 text-purple-800 border-purple-200" :
+                                                        user.role === "Department Staff" ? "bg-blue-100 text-blue-800 border-blue-200" :
+                                                            "bg-gray-100 text-gray-800 border-gray-200"
+                                                }>
+                                                    {user.role}
+                                                </Badge>
+                                            </TableCell>
+                                            <TableCell className="text-sm text-muted-foreground">
+                                                {user.departmentOrGrade}
+                                            </TableCell>
+                                            <TableCell>
+                                                <Badge variant="secondary" className={
+                                                    user.status === "Active" ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-100 border-emerald-200" :
+                                                        "bg-red-100 text-red-800 hover:bg-red-100 border-red-200"
+                                                }>
+                                                    {user.status}
+                                                </Badge>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </div>
                     </CardContent>
                 </Card>
             </div>
