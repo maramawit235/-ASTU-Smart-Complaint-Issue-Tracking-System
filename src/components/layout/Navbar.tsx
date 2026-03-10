@@ -48,8 +48,11 @@ export default function Navbar() {
           <Link href="/" className="transition-colors hover:text-accent">
             Home
           </Link>
-          <Link href="/student-dashboard" className="transition-colors hover:text-accent">
-            Dashboard
+          <Link href="/login" className="transition-colors hover:text-accent">
+            Login
+          </Link>
+          <Link href="/register" className="transition-colors hover:text-accent">
+            Register
           </Link>
           <Link href="/about" className="transition-colors hover:text-accent">
             About

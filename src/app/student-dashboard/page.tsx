@@ -30,6 +30,36 @@ import { format } from "date-fns";
 export default function StudentDashboard() {
     const [activeTab, setActiveTab] = useState("overview");
     const [statusFilter, setStatusFilter] = useState<TicketStatus | "All">("All");
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+
+    // Form State
+    const [category, setCategory] = useState("");
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+
+    const handleSubmit = () => {
+        if (!category || !title || !description) return;
+
+        setIsSubmitting(true);
+
+        // Simulate API call
+        setTimeout(() => {
+            setIsSubmitting(false);
+            setShowSuccess(true);
+
+            // Reset form
+            setCategory("");
+            setTitle("");
+            setDescription("");
+
+            // Return to overview after 3 seconds
+            setTimeout(() => {
+                setShowSuccess(false);
+                setActiveTab("overview");
+            }, 3000);
+        }, 1500);
+    };
 
     const filteredTickets = mockStudentTickets.filter(ticket =>
         statusFilter === "All" ? true : ticket.status === statusFilter
@@ -212,9 +242,16 @@ export default function StudentDashboard() {
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
+                            {showSuccess && (
+                                <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded-lg flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300 mb-4">
+                                    <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                                    <p className="text-sm font-medium">Complaint submitted successfully! Redirecting...</p>
+                                </div>
+                            )}
+
                             <div className="space-y-2">
                                 <Label htmlFor="category">Category</Label>
-                                <Select>
+                                <Select value={category} onValueChange={setCategory}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select a category" />
                                     </SelectTrigger>
@@ -230,7 +267,12 @@ export default function StudentDashboard() {
 
                             <div className="space-y-2">
                                 <Label htmlFor="title">Issue Title</Label>
-                                <Input id="title" placeholder="Brief summary of the issue" />
+                                <Input
+                                    id="title"
+                                    placeholder="Brief summary of the issue"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                />
                             </div>
 
                             <div className="space-y-2">
@@ -239,6 +281,8 @@ export default function StudentDashboard() {
                                     id="description"
                                     placeholder="Please provide as much text as possible to help us resolve the issue."
                                     className="min-h-[120px]"
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
                                 />
                             </div>
 
@@ -252,8 +296,14 @@ export default function StudentDashboard() {
                             </div>
                         </CardContent>
                         <CardFooter className="flex justify-between border-t p-6">
-                            <Button variant="ghost" onClick={() => setActiveTab("overview")}>Cancel</Button>
-                            <Button>Submit Complaint</Button>
+                            <Button variant="ghost" onClick={() => setActiveTab("overview")} disabled={isSubmitting}>Cancel</Button>
+                            <Button
+                                onClick={handleSubmit}
+                                disabled={isSubmitting || !category || !title || !description}
+                                className="relative"
+                            >
+                                {isSubmitting ? "Submitting..." : "Submit Complaint"}
+                            </Button>
                         </CardFooter>
                     </Card>
                 </TabsContent>
